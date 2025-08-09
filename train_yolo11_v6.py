@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 
 """
-train_yolo11_v6.py — SAR/UAV training (fixed tile sampling, UAV augs, final phase, H100-friendly)
+train_yolo11_v6.py — SAR/UAV training (fixed tile sampling, UAV augs, final phase)
 
-Запуск (пример под H100):
+Запуск (пример):
 python train_yolo11_v6.py train \
   --data ./dataset/yolo_dataset/dataset.yaml \
   --model l \
@@ -671,7 +671,7 @@ def train_yolo(
             rand_phase=bool(rand_phase),
         )
 
-    # компиляция может ускорить H100 (PyTorch 2.x)
+    # компиляция может ускорить (PyTorch 2.x)
     try:
         model.model.to(memory_format=torch.channels_last)
     except Exception:
