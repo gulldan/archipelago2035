@@ -55,6 +55,13 @@ COLUMNS = [
 # ===========================
 # HELPERS
 # ===========================
+def _enable_gpu_perf():
+    if torch.cuda.is_available():
+        torch.backends.cudnn.benchmark = True
+        torch.backends.cudnn.allow_tf32 = True
+        torch.backends.cuda.matmul.allow_tf32 = True
+        torch.set_float32_matmul_precision("high")
+        
 def gpu_info():
     """Return human‑readable information about the first CUDA device or CPU."""
     if torch.cuda.is_available():
@@ -1130,6 +1137,7 @@ def predict(images: np.ndarray | list[np.ndarray]) -> list[list[dict]]:
 # CLI
 # ===========================
 def main():
+    _enable_gpu_perf()
     parser = argparse.ArgumentParser("SAR YOLOv11 pipeline")
     sub = parser.add_subparsers(dest="cmd", required=True)
 
